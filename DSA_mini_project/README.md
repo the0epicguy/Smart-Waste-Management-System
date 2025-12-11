@@ -1,4 +1,4 @@
-# ♻️ SmartWasteGUI — Smart Waste Management System  
+# ♻️ SmartWasteGUI - Smart Waste Management System  
 
 > A smart, IoT-driven desktop interface for monitoring and managing waste collection systems efficiently.  
 
@@ -7,7 +7,7 @@
 ## 🧩 Overview  
 
 **SmartWasteGUI** is a **Graphical User Interface (GUI) application** designed to simplify and automate waste management in urban areas.  
-It allows users (e.g., municipal workers or administrators) to monitor bin statuses, view alerts for full bins, and optimize collection schedules using a clean and interactive interface.  
+It allows users (e.g., municipal workers or administrators) to monitor bin statuses, view alerts for full bins and optimize collection schedules using a clean and interactive interface.  
 
 This project demonstrates how **technology and sustainability** can work hand-in-hand to create cleaner and smarter cities.  
 
@@ -117,11 +117,11 @@ cd ../build
 
 ## 🖥️ Key Features  
 
-- ✅ **Interactive GUI** — Clean interface for monitoring waste bins  
-- 🌐 **IoT-Ready** — Supports integration with smart sensors  
-- 🚨 **Alert System** — Notifies when bins are full  
-- 📈 **Data Visualization** — Shows real-time updates and trends  
-- 🔄 **Modular Design** — Easy to modify and extend  
+- ✅ **Interactive GUI** - Clean interface for monitoring waste bins  
+- 🌐 **IoT-Ready** - Supports integration with smart sensors  
+- 🚨 **Alert System** - Notifies when bins are full  
+- 📈 **Data Visualization** - Shows real-time updates and trends  
+- 🔄 **Modular Design** - Easy to modify and extend  
 
 ---
 
@@ -147,7 +147,7 @@ By integrating IoT and data visualization, **SmartWasteGUI** helps:
 
 ## 📜 License  
 
-This project is licensed under the **MIT License** — feel free to use, modify, and share it.
+This project is licensed under the **MIT License** - feel free to use, modify, and share it.
 
 ---
 
