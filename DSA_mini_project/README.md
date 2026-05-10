@@ -1,14 +1,14 @@
 # ♻️ Smart Waste Management System
 
-> A GTK-based desktop application for real-time urban waste bin monitoring, priority-based alerting, and graph-routed truck dispatch optimization.
+> A GTK-based desktop application for real-time urban waste bin monitoring, priority-based alerting and graph-routed truck dispatch optimization.
 
 ---
 
 ## Overview
 
-The **Smart Waste Management System** is a C/GTK+ desktop application that helps municipal administrators monitor dustbin fill levels across city areas, receive urgency alerts, and dispatch collection trucks along the most efficient road routes.
+The **Smart Waste Management System** is a C/GTK+ desktop application that helps municipal administrators monitor dustbin fill levels across city areas, receive urgency alerts and dispatch collection trucks along the most efficient road routes.
 
-The system models the city's road network as a **weighted graph** and uses **Dijkstra's shortest path algorithm** to determine the optimal truck route from the depot to each collection area — replacing a naive crow-fly distance sort with true road-network awareness.
+The system models the city's road network as a **weighted graph** and uses **Dijkstra's shortest path algorithm** to determine the optimal truck route from the depot to each collection area, replacing a naive crow-fly distance sort with true road-network awareness.
 
 ---
 
@@ -26,7 +26,7 @@ Traditional waste management relies on fixed schedules and manual inspection, le
 
 The system provides a live dashboard where administrators can:
 
-- Monitor all bins by fill level, area, and urgency status
+- Monitor all bins by fill level, area and urgency status
 - Receive automatic URGENT alerts for bins at or above 90% capacity
 - Sort and queue bins by **shortest road distance from the depot** using Dijkstra's algorithm
 - Dispatch trucks along the road-optimal route, collecting all bins in a target area in a single trip
@@ -39,9 +39,9 @@ The system provides a live dashboard where administrators can:
 The application is split into a GTK+ frontend and a pure-C core logic layer.
 
 **Frontend (GTK+)**
-- `gui.c` — Window creation, tabs, CSS theming, analytics chart
-- `gui_callbacks.c` — Button and event handlers
-- `gui_helpers.c` — Tree view refresh functions
+- `gui.c` - Window creation, tabs, CSS theming, analytics chart
+- `gui_callbacks.c` - Button and event handlers
+- `gui_helpers.c` - Tree view refresh functions
 
 **Core Logic (`main.c`)**
 - Dustbin linked list
@@ -59,17 +59,17 @@ The frontend calls into the core exclusively through the API declared in `core.h
 
 | Structure | Type | Role |
 |-----------|------|------|
-| `Dustbin` | Linked list | Master store of all bins — ID, area, fill level, distance, priority score |
-| `AreaGraph` | Adjacency matrix | City road network — area nodes and weighted edges in road km |
+| `Dustbin` | Linked list | Master store of all bins - ID, area, fill level, distance, priority score |
+| `AreaGraph` | Adjacency matrix | City road network - area nodes and weighted edges in road km |
 | `priorityqueue` | Sorted linked list | Urgent bins (fill ≥ 90%), ordered by priority score |
 | `queue` | FIFO linked list | Normal bins, enqueued in Dijkstra road-distance order |
 
 ### Why a Graph instead of a BST?
 
-The previous version built a **Binary Search Tree** on bin distance values, traversed it in-order, copied the result into queues, then freed the BST — every single time sorting was needed. This had two problems:
+The previous version built a **Binary Search Tree** on bin distance values, traversed it in-order, copied the result into queues, then freed the BST - every single time sorting was needed. This had two problems:
 
 1. It sorted individual bins by **straight-line distance**, not by which area the truck should visit first on the actual road network.
-2. The BST was a **temporary throwaway structure** — rebuilt and discarded every call, with no lasting value.
+2. The BST was a **temporary throwaway structure** - rebuilt and discarded every call, with no lasting value.
 
 The graph replaces both the BST and the old `AreaDistance` linked list with a single persistent `AreaGraph`. Dijkstra runs once per dispatch to produce a road-optimal area visit order, which then fills the queues. The result is a more realistic and more efficient routing engine.
 
@@ -77,19 +77,19 @@ The graph replaces both the BST and the old `AreaDistance` linked list with a si
 
 ## Routing Algorithm
 
-**Step 1 — Dijkstra from DEPOT**
+**Step 1: Dijkstra from DEPOT**
 
 Finds the shortest road path from the depot to every area node in the graph.
 
-**Step 2 — Sort areas by road distance**
+**Step 2: Sort areas by road distance**
 
 Areas that contain bins are sorted by their Dijkstra road distance (insertion sort, V ≤ 20).
 
-**Step 3 — Fill queues**
+**Step 3: Fill queues**
 
 Bins are enqueued area-by-area in road-optimal order. Bins with fill ≥ 90% go to the priority queue; all others go to the normal queue.
 
-**Step 4 — Dispatch**
+**Step 4: Dispatch**
 
 The truck pops the highest-priority target (priority queue first, then normal queue), re-runs Dijkstra to get the exact road distance, collects all bins in that area in one trip, then computes total route time as: travel out + loading + return.
 
@@ -187,8 +187,8 @@ cd ../build
 
 | Feature | Description |
 |---------|-------------|
-| **Live Dashboard** | System status, legend, and all action controls in one view |
-| **Bins Overview** | Table of all bins with ID, area, distance, fill %, and status |
+| **Live Dashboard** | System status, legend and all action controls in one view |
+| **Bins Overview** | Table of all bins with ID, area, distance, fill % and status |
 | **Collection Queues** | Separate views for urgent (priority) and normal queues |
 | **Analytics Chart** | Interactive bar chart — click a bar to see per-category bin counts |
 | **Truck Simulator** | Dispatches truck along Dijkstra-optimal route with animated progress |
@@ -202,12 +202,12 @@ cd ../build
 
 | Status | Fill Level | Queue |
 |--------|------------|-------|
-| URGENT | ≥ 90% | Priority queue — dispatched first |
-| HIGH | 70 – 89% | Normal queue |
-| MEDIUM | 50 – 69% | Normal queue |
+| URGENT | ≥ 90% | Priority queue - dispatched first |
+| HIGH | 70 - 89% | Normal queue |
+| MEDIUM | 50 - 69% | Normal queue |
 | LOW | < 50% | Normal queue |
 
-Priority score formula: `priority = (fillLevel × 2) − (distance × 5)`
+Priority score formula: `priority = (fillLevel × 2) - (distance × 5)`
 
 ---
 
@@ -223,7 +223,7 @@ Priority score formula: `priority = (fillLevel × 2) − (distance × 5)`
 
 ## License
 
-This project is licensed under the **MIT License** — free to use, modify, and distribute.
+This project is licensed under the **MIT License** - free to use, modify, and distribute.
 
 ---
 
