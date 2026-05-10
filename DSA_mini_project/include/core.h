@@ -3,10 +3,6 @@
 
 #include <stdio.h>
 
-// ----------------------------
-// Core data structures
-// ----------------------------
-
 typedef struct Dustbin {
     int binID;
     char area[50];
@@ -16,14 +12,29 @@ typedef struct Dustbin {
     struct Dustbin* next;
 } Dustbin;
 
-// BST node for sorting bins by distance
-typedef struct BSTNode {
-    Dustbin* binptr;
-    struct BSTNode* left;
-    struct BSTNode* right;
-} BSTNode;
+#define MAX_AREAS 20
+#define INF_DIST  1e9f
 
-// Normal queue node
+typedef struct {
+    char name[50];
+    float depotDistance;
+} AreaNode;
+
+typedef struct {
+    AreaNode nodes[MAX_AREAS];
+    float    weight[MAX_AREAS][MAX_AREAS];
+    int      count;
+} AreaGraph;
+
+extern AreaGraph g_areaGraph;
+
+int   graph_addArea(const char* name, float depotDist);
+int   graph_findArea(const char* name);
+void  graph_addEdge(const char* a, const char* b, float roadKm);
+float graph_getDepotDist(const char* area);
+void  graph_clear(void);
+void  graph_dijkstra(int src, float* dist, int* prev);
+
 typedef struct queue {
     int binID;
     char area[50];
@@ -33,7 +44,6 @@ typedef struct queue {
     struct queue* next;
 } queue;
 
-// Priority queue node
 typedef struct priorityqueue {
     int binID;
     char area[50];
@@ -43,63 +53,49 @@ typedef struct priorityqueue {
     struct priorityqueue* next;
 } priorityqueue;
 
-// ----------------------------
-// Global lists / queues
-// (defined in main.c)
-// ----------------------------
-
-extern Dustbin* head;
-extern queue* front;
-extern queue* rear;
+extern Dustbin*       head;
+extern queue*         front;
+extern queue*         rear;
 extern priorityqueue* priorityfront;
 extern priorityqueue* priorityrear;
 
-// ----------------------------
-// Core API used by GUI
-// ----------------------------
-
-// Bin / list operations
 Dustbin* createBin(int id, char* area, float distance, int fillLevel);
-int addBin(int id, char* area, float distance, int fillLevel);
-int deleteBin(int id);
-void displayBins();
-int updateFillLevel(int id, int newFillLevel);
+int      addBin(int id, char* area, float distance, int fillLevel);
+int      deleteBin(int id);
+void     displayBins(void);
+int      updateFillLevel(int id, int newFillLevel);
 Dustbin* findBinByID(int id);
-void freeLinkedList();
+void     freeLinkedList(void);
 
-// Queue / priority queue and sorting
 void classify(Dustbin* node);
 void enqueue(Dustbin* node);
 void deletefromqueue(int id);
 void priorityenqueue(Dustbin* dustnode);
 void deletefrompriorityqueue(int id);
-void display();
-void prioritydisplay();
-void queueBinsByDistance();
-void clearQueue();
-void clearPriorityQueue();
+void display(void);
+void prioritydisplay(void);
+void queueBinsByDistance(void);
+void clearQueue(void);
+void clearPriorityQueue(void);
 
-// Simulation / system helpers
-void initializeRandomBins();
+void initializeRandomBins(void);
 void collectBinsFromArea(char* area);
-void simulateTruckCollection();
-void simulateFillLevelIncrease();
-void displaySystemStatus();
-void freeAreaDistances();
+void simulateTruckCollection(void);
+void simulateFillLevelIncrease(void);
+void displaySystemStatus(void);
+void freeAreaDistances(void);
 
 typedef struct DispatchSummary {
-    int  valid;
-    int  targetID;
-    char area[50];
+    int   valid;
+    int   targetID;
+    char  area[50];
     float distance;
-    int  startFill;
-    int  binsCollected;
+    int   startFill;
+    int   binsCollected;
     float totalTimeMinutes;
-    int  wasPriority;
+    int   wasPriority;
 } DispatchSummary;
 
 const DispatchSummary* getLastDispatchSummary(void);
 
 #endif
-
-
