@@ -221,12 +221,6 @@ Priority score formula: `priority = (fillLevel × 2) - (distance × 5)`
 
 ---
 
-## License
-
-This project is licensed under the **MIT License** - free to use, modify, and distribute.
-
----
-
 ## Acknowledgements
 
 Built as a DSA mini-project with a focus on applying graph theory to a real-world urban infrastructure problem. Thanks to our faculty mentors for their guidance throughout the development process.
