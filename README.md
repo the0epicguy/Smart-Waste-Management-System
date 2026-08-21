@@ -210,15 +210,6 @@ cd ../build
 Priority score formula: `priority = (fillLevel × 2) - (distance × 5)`
 
 ---
-## Contributors
-
-| Contributor | Contribution |
-|-------------|-------------|
-| **Advait Gajewar** | Linked Lists, UI Handling, Simulation Logic, Overall System Coordination |
-| **Tanushka Gulhane** | Priority Queue, Queue Management |
-| **Tanushri Jadhav** | Graph Integration, Dijkstra Routing, Truck Dispatch Optimization |
-
----
 ## Future Scope
 
 - Live IoT sensor integration via MQTT or serial interface
